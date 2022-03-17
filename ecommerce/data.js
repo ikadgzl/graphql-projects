@@ -7,6 +7,7 @@ export const products = [
     price: 42.44,
     image: 'img-1',
     onSale: false,
+    categoryId: 'c01b1ff4-f894-4ef2-b27a-22aacc2fca70',
   },
 
   {
@@ -17,6 +18,7 @@ export const products = [
     price: 53.5,
     image: 'img-2',
     onSale: false,
+    categoryId: 'c01b1ff4-f894-4ef2-b27a-22aacc2fca70',
   },
 
   {
@@ -27,6 +29,7 @@ export const products = [
     price: 1.33,
     image: 'img-3',
     onSale: true,
+    categoryId: 'c01b1ff4-f894-4ef2-b27a-22aacc2fca70',
   },
 
   {
@@ -37,6 +40,7 @@ export const products = [
     price: 332,
     image: 'img-4',
     onSale: false,
+    categoryId: '34115aac-0ff5-4859-8f43-10e8db23602b',
   },
 
   {
@@ -47,6 +51,7 @@ export const products = [
     price: 23.11,
     image: 'img-5',
     onSale: true,
+    categoryId: '34115aac-0ff5-4859-8f43-10e8db23602b',
   },
 
   {
@@ -57,6 +62,7 @@ export const products = [
     price: 59.99,
     image: 'img-6',
     onSale: true,
+    categoryId: 'd914aec0-25b2-4103-9ed8-225d39018d1d',
   },
 
   {
@@ -67,6 +73,7 @@ export const products = [
     price: 427.44,
     image: 'img-7',
     onSale: false,
+    categoryId: 'd914aec0-25b2-4103-9ed8-225d39018d1d',
   },
 
   {
@@ -77,6 +84,7 @@ export const products = [
     price: 77.0,
     image: 'img-8',
     onSale: true,
+    categoryId: 'd914aec0-25b2-4103-9ed8-225d39018d1d',
   },
 
   {
@@ -87,6 +95,7 @@ export const products = [
     price: 93.44,
     image: 'img-9',
     onSale: false,
+    categoryId: 'd914aec0-25b2-4103-9ed8-225d39018d1d',
   },
 ];
 

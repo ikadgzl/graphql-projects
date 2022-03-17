@@ -22,6 +22,7 @@ const typeDefs = gql`
   type Category {
     id: ID!
     name: String!
+    products: [Product!]!
   }
 `;
 
@@ -45,11 +46,22 @@ const resolvers = {
         (category) => category.id === categoryId
       );
 
-      console.log(category);
-
       if (!category) return null;
 
       return category;
+    },
+  },
+
+  Category: {
+    products: (parent, args, context) => {
+      const categoryId = parent.id;
+      const productsOfCategory = products.filter(
+        (product) => product.categoryId === categoryId
+      );
+
+      if (!productsOfCategory) return null;
+
+      return productsOfCategory;
     },
   },
 };
