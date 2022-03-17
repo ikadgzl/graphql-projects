@@ -123,7 +123,7 @@ export const reviews = [
     title: 'This is bad',
     comment: 'when i bought this it broke the stove',
     rating: 1,
-    productId: 1,
+    productId: "53a0724c-a416-4cac-ae45-bfaedce1f147'",
   },
 
   {
