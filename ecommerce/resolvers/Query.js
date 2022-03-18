@@ -1,10 +1,10 @@
 export const Query = {
-  products: (parent, { filter }, { products, reviews }) => {
-    let filteredProducts = products;
+  products: (parent, { filter }, { db }) => {
+    let filteredProducts = db.products;
 
     if (filter) {
       if (filter.onSale) {
-        filteredProducts = products.filter((product) => product.onSale);
+        filteredProducts = db.products.filter((product) => product.onSale);
       }
 
       if (filter.avgRating > 0 && filter.avgRating < 6) {
@@ -28,19 +28,22 @@ export const Query = {
 
     return filteredProducts;
   },
-  product: (parent, { id: productId }, { products }) => {
-    const product = products.find((product) => product.id === productId);
+  product: (parent, { id: productId }, { db }) => {
+    const product = db.products.find((product) => product.id === productId);
 
     if (!product) return null;
 
     return product;
   },
-  categories: (parent, args, { categories }) => categories,
-  category: (parent, { id: categoryId }, { categories }) => {
-    const category = categories.find((category) => category.id === categoryId);
+  categories: (parent, args, { db }) => db.categories,
+  category: (parent, { id: categoryId }, { db }) => {
+    const category = db.categories.find(
+      (category) => category.id === categoryId
+    );
 
     if (!category) return null;
 
     return category;
   },
+  reviews: (parent, args, { db }) => db.reviews,
 };

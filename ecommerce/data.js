@@ -1,4 +1,4 @@
-export const products = [
+const products = [
   {
     id: '53a0724c-a416-4cac-ae45-bfaedce1f147',
     name: 'Steel Pot',
@@ -99,7 +99,7 @@ export const products = [
   },
 ];
 
-export const categories = [
+const categories = [
   {
     id: 'c01b1ff4-f894-4ef2-b27a-22aacc2fca70',
     name: 'Kitchen',
@@ -114,16 +114,21 @@ export const categories = [
     id: 'd914aec0-25b2-4103-9ed8-225d39018d1d',
     name: 'Sports',
   },
+
+  {
+    id: '64920b7c-32ed-4efc-a743-3d66f4f255b3',
+    name: 'Electronics',
+  },
 ];
 
-export const reviews = [
+const reviews = [
   {
     id: 'b22da5d4-6a4b-4db5-8ec3-acc228c36260',
     date: '2021-01-01',
     title: 'This is bad',
     comment: 'when i bought this it broke the stove',
     rating: 1,
-    productId: "53a0724c-a416-4cac-ae45-bfaedce1f147'",
+    productId: '53a0724c-a416-4cac-ae45-bfaedce1f147',
   },
 
   {
@@ -316,3 +321,9 @@ export const reviews = [
     productId: '47bf3941-9c8b-42c0-9c72-7f3985492a5b',
   },
 ];
+
+export default {
+  products,
+  categories,
+  reviews,
+};
