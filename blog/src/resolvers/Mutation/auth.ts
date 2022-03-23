@@ -20,14 +20,16 @@ interface SigninArgs {
 }
 
 interface UserPayload {
-  userErrors: {
-    message: string;
-  }[];
+  userErrors:
+    | {
+        message: string;
+      }[]
+    | null;
   token: string | null;
 }
 
 export const signup = async (
-  _,
+  _: any,
   { credentials: { email, password }, name, bio }: SignupArgs,
   { prisma }: Context
 ): Promise<UserPayload> => {
@@ -72,7 +74,7 @@ export const signup = async (
 };
 
 export const signin = async (
-  _,
+  _: any,
   { credentials: { email, password } }: SigninArgs,
   { prisma }: Context
 ): Promise<UserPayload> => {

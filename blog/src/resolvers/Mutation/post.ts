@@ -1,5 +1,6 @@
 import { Post } from '@prisma/client';
 import { Context } from '../..';
+import { canUserMutatePost } from '../../utils/canUserMutatePost';
 
 interface PostArgs {
   input: {
@@ -9,17 +10,26 @@ interface PostArgs {
 }
 
 interface PostPayload {
-  userErrors: {
-    message: string;
-  }[];
+  userErrors:
+    | {
+        message: string;
+      }[]
+    | null;
   post: Post | null;
 }
 
 export const postCreate = async (
-  _,
+  _: any,
   { input }: PostArgs,
-  { prisma }: Context
+  { prisma, userInfo }: Context
 ): Promise<PostPayload> => {
+  if (!userInfo) {
+    return {
+      userErrors: [{ message: 'Unauthorized.' }],
+      post: null
+    };
+  }
+
   const { title, content } = input;
 
   if (!title || !content) {
@@ -33,7 +43,7 @@ export const postCreate = async (
     data: {
       title,
       content,
-      authorId: 1
+      authorId: userInfo.userId
     }
   });
 
@@ -44,10 +54,25 @@ export const postCreate = async (
 };
 
 export const postUpdate = async (
-  _,
+  _: any,
   { postId, input }: { postId: string; input: PostArgs['input'] },
-  { prisma }: Context
+  { prisma, userInfo }: Context
 ): Promise<PostPayload> => {
+  if (!userInfo) {
+    return {
+      userErrors: [{ message: 'Unauthorized.' }],
+      post: null
+    };
+  }
+
+  const error = await canUserMutatePost({
+    userId: userInfo.userId,
+    postId: Number(postId),
+    prisma
+  });
+
+  if (error) return error;
+
   const { title, content } = input;
 
   if (!title || !content) {
@@ -84,10 +109,25 @@ export const postUpdate = async (
 };
 
 export const postDelete = async (
-  _,
+  _: any,
   { postId }: { postId: string },
-  { prisma }: Context
+  { prisma, userInfo }: Context
 ): Promise<PostPayload> => {
+  if (!userInfo) {
+    return {
+      userErrors: [{ message: 'Unauthorized.' }],
+      post: null
+    };
+  }
+
+  const error = await canUserMutatePost({
+    userId: userInfo.userId,
+    postId: Number(postId),
+    prisma
+  });
+
+  if (error) return error;
+
   const existingPost = await prisma.post.findUnique({
     where: {
       id: Number(postId)
@@ -110,5 +150,75 @@ export const postDelete = async (
   return {
     userErrors: null,
     post: deletedPost
+  };
+};
+
+export const postPublish = async (
+  _: any,
+  { postId }: { postId: string },
+  { prisma, userInfo }: Context
+): Promise<PostPayload> => {
+  if (!userInfo) {
+    return {
+      userErrors: [{ message: 'Unauthorized.' }],
+      post: null
+    };
+  }
+
+  const error = await canUserMutatePost({
+    userId: userInfo.userId,
+    postId: Number(postId),
+    prisma
+  });
+
+  if (error) return error;
+
+  const publishedPost = await prisma.post.update({
+    where: {
+      id: Number(postId)
+    },
+    data: {
+      published: true
+    }
+  });
+
+  return {
+    userErrors: null,
+    post: publishedPost
+  };
+};
+
+export const postUnpublish = async (
+  _: any,
+  { postId }: { postId: string },
+  { prisma, userInfo }: Context
+): Promise<PostPayload> => {
+  if (!userInfo) {
+    return {
+      userErrors: [{ message: 'Unauthorized.' }],
+      post: null
+    };
+  }
+
+  const error = await canUserMutatePost({
+    userId: userInfo.userId,
+    postId: Number(postId),
+    prisma
+  });
+
+  if (error) return error;
+
+  const publishedPost = await prisma.post.update({
+    where: {
+      id: Number(postId)
+    },
+    data: {
+      published: false
+    }
+  });
+
+  return {
+    userErrors: null,
+    post: publishedPost
   };
 };

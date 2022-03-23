@@ -2,6 +2,7 @@ import { ApolloServer } from 'apollo-server';
 import { typeDefs } from './schema';
 import { Query, Mutation } from './resolvers';
 import { Prisma, PrismaClient } from '@prisma/client';
+import { getUserFromToken } from './utils/getUserFromToken';
 
 const prisma = new PrismaClient();
 
@@ -11,6 +12,9 @@ export interface Context {
     never,
     Prisma.RejectOnNotFound | Prisma.RejectPerOperation
   >;
+  userInfo: {
+    userId: number;
+  } | null;
 }
 
 const server = new ApolloServer({
@@ -19,8 +23,13 @@ const server = new ApolloServer({
     Query,
     Mutation
   },
-  context: {
-    prisma
+  context: ({ req }: any): Context => {
+    const userInfo = getUserFromToken(req.headers.authorization);
+
+    return {
+      prisma,
+      userInfo
+    };
   }
 });
 
