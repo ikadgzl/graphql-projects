@@ -5,7 +5,7 @@ import { Prisma, PrismaClient } from '@prisma/client';
 import { getUserFromToken } from './utils/getUserFromToken';
 import { Profile, User, Post } from './resolvers';
 
-const prisma = new PrismaClient();
+export const prisma = new PrismaClient();
 
 export interface Context {
   prisma: PrismaClient<Prisma.PrismaClientOptions, never, Prisma.RejectOnNotFound | Prisma.RejectPerOperation>;

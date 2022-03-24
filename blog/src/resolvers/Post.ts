@@ -1,4 +1,5 @@
 import { Context } from '..';
+import { userBatch, userLoader } from '../loaders/userLoader';
 
 interface PostParentArgs {
   id: number;
@@ -9,6 +10,6 @@ interface PostParentArgs {
 
 export const Post = {
   user: async ({ authorId }: PostParentArgs, _: any, { prisma }: Context) => {
-    return await prisma.user.findUnique({ where: { id: authorId } });
+    return await userLoader.load(authorId);
   }
 };
