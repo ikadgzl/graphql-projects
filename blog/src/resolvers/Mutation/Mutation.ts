@@ -1,11 +1,5 @@
-import {
-  postCreate,
-  postUpdate,
-  postDelete,
-  postPublish,
-  postUnpublish
-} from './post';
-import { signup, signin } from './auth';
+import { postCreate, postUpdate, postDelete, postPublish, postUnpublish } from './Post';
+import { signup, signin } from './Auth';
 
 export const Mutation = {
   postCreate,

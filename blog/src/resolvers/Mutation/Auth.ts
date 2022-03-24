@@ -28,11 +28,7 @@ interface UserPayload {
   token: string | null;
 }
 
-export const signup = async (
-  _: any,
-  { credentials: { email, password }, name, bio }: SignupArgs,
-  { prisma }: Context
-): Promise<UserPayload> => {
+export const signup = async (_: any, { credentials: { email, password }, name, bio }: SignupArgs, { prisma }: Context): Promise<UserPayload> => {
   // TODO: warn user on the frontend, backend just sending generic message.
   const validEmail = validator.isEmail(email);
   const validPassword = validator.isLength(password, {
@@ -73,13 +69,7 @@ export const signup = async (
   };
 };
 
-export const signin = async (
-  _: any,
-  { credentials: { email, password } }: SigninArgs,
-  { prisma }: Context
-): Promise<UserPayload> => {
-  console.log(email, password);
-
+export const signin = async (_: any, { credentials: { email, password } }: SigninArgs, { prisma }: Context): Promise<UserPayload> => {
   if (!email || !password) {
     return {
       userErrors: [{ message: 'Please provide the credentials.' }],
